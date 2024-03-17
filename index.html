@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Send Form Data on What</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body{
+                background: rgb(233, 233, 235);
+            }
+            form{
+                width: 300px;
+                background-color: gainsboro;
+                margin: 50px auto;
+                padding: 10px;
+                border-radius: 5px;
+            }
+            input{
+                width: 100%;
+                margin-bottom: 15px;
+                padding: 5px;
+            }
+            button{
+                background-color: green;
+                color: #fff;
+                border: none;
+                outline: none;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                display: block;
+                width: 100%;
+                padding: 5px;
+            }
+            .parsley-error{
+                background-color: #fcdbe0;
+            }
+            .parsley-success{
+                background: #d2f7d2;
+                color: green;
+            }
+            .parsley-errors-list{
+                display: none;
+            }
+        </style>
+        
+    </head>
+    <body>
+        
+        <div class="box">
+            <form method="post" data-parsley-validate>
+                <label for="#name">Name*</label>
+                <input type="text" placeholder="Enter your name" id="name" required />
+
+                <label for="#email">Email*</label>
+                <input type="email" placeholder="Enter your email" id="email" required />
+
+                <label for="#password">Password*</label>
+                <input type="password" placeholder="Enter password" id="password" autocomplete="on" required />
+
+                <button type="submit">Send Data</button>
+            </form>
+        </div><!--****** End of box-->
+
+        <script>
+            let form = document.querySelector("form");
+            form.addEventListener("submit", (event) =>{
+                event.preventDefault();
+                let totalInputs = 0;
+                let validNumber = 0;
+                let name = encodeURIComponent(event.currentTarget.name.value);
+                let email = encodeURIComponent(event.currentTarget.email.value);
+                let password = encodeURIComponent(event.currentTarget.password.value);
+
+                setTimeout(() => {
+                    
+                    let inputs = document.querySelectorAll("input");
+                    for(let items of inputs){
+                        totalInputs ++;
+
+                        if(items.classList.contains("parsley-success") == true ){
+                            validNumber = validNumber + 1;
+                        }
+                    }
+
+                    if(validNumber == totalInputs){
+                        let whatsAppNumb = "+919065608408";
+
+                        let WhatsAppmessage = `*User Data*%0A *StudentName :- * ${name}%0A*StudentEmail :- * ${email}%0A *StudentPassword :- * ${password}`;
+                        
+                        let WhatSappUrl = `https://wa.me/${whatsAppNumb}?text=${WhatsAppmessage}`;
+
+                        window.open(WhatSappUrl, "_blank").focus();
+                    }
+                    
+                }, 10);
+                
+                validNumber = 0
+            });
+        </script>
+
+        <script src="./jquery.js"></script>
+        <script src="https://parsleyjs.org/dist/parsley.min.js"></script>
+        
+    </body>
+</html>
